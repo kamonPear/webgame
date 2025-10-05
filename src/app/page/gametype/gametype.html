@@ -1,0 +1,18 @@
+
+<app-navbar></app-navbar>
+<div class="bg-shape shape-1"></div>
+<div class="bg-shape shape-2"></div>
+
+<div class="game-grid">
+
+  <div *ngFor="let game of games" class="game-card">
+    
+    <img class="card-image" [src]="game.imageUrl" [alt]="game.title">
+    
+    <div class="card-info" [ngClass]="game.colorClass">
+      <h3 class="card-title">{{ game.title }}</h3>
+      <p class="card-subtitle">{{ game.subtitle }}</p>
+    </div>
+  </div>
+
+</div>
