@@ -1,54 +1,58 @@
 <div class="login-page-container">
+  <header class="page-header">
+    <span class="logo-top">GamePoint</span>
+    <span class="page-title">Loin</span>
+  </header>
 
-    <header class="page-header">
-        <span class="logo-top">Game Oracle</span>
-        <span class="page-title">Sing In</span>
-    </header>
+  <main class="main-content">
+    <div class="login-box-wrapper">
+      <div class="character-image-container">
+        <img src="/assets/images/dino.png" alt="Dinosaur Character" />
+      </div>
 
-    <main class="main-content">
+      <div class="info-pane">
+        <mat-card class="info-card">
+          <h2>GamePoint</h2>
+          <h3>บัญชีเดียวสำหรับบริการทั้งหมดของ GamePoint</h3>
+          <p>
+            สวัสดี! ลงทะเบียนบัญชีผู้ใช้และเพลิดเพลินกับประสบการณ์การเชื่อมต่อของคุณบน GamePoint.
+          </p>
+          <button mat-flat-button class="create-account-btn" routerLink="/register">
+            สร้างบัญชีใหม่
+          </button>
+        </mat-card>
+      </div>
 
-        <div class="character-image-container">
-            <img src="assets/images/image_login.png" alt="Login Character Image">
-        </div>
+      <div class="login-pane">
+        <mat-card class="login-card">
+          <mat-card-content>
+            <h2 class="login-title">ลงชื่อเข้าใช้</h2>
+            <form>
+              <mat-form-field appearance="fill" class="login-field">
+                <mat-icon matPrefix>person</mat-icon>
+                <input matInput placeholder="ชื่อผู้ใช้" />
+              </mat-form-field>
 
-        <div class="info-pane">
-            <mat-card class="info-card">
-                <h2>Game Oracle</h2>
-                <h3>บัญชีเดียวสำหรับบริการทั้งหมดของ GameOracle</h3>
-                <p>
-                    สวัสดี! คุณยังไม่มีบัญชีใช่ไหม?
-                    มาสร้างบัญชีเพื่อรับสิทธิพิเศษและประสบการณ์การเล่นเกมของคุณแบบไม่เหมือนใครกับ GameOracle
-                </p>
-                <button mat-flat-button class="create-account-btn" routerLink="/register">สร้างบัญชีใหม่</button>
-            </mat-card>
-        </div>
+              <mat-form-field appearance="fill" class="login-field">
+                <mat-icon matPrefix>lock</mat-icon>
+                <input
+                  matInput
+                  [type]="hidePassword ? 'password' : 'text'"
+                  placeholder="รหัสผ่าน"
+                />
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                  <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+              </mat-form-field>
 
-        <div class="login-pane">
-            <mat-card class="login-card">
-                <mat-card-content>
-                    <h2 class="login-title">ลงชื่อเข้าใช้</h2>
-                    <form>
-                        <mat-form-field appearance="fill" class="login-field">
-                            <mat-icon matPrefix>person</mat-icon>
-                            <input matInput>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="fill" class="login-field">
-                            <mat-icon matPrefix>lock</mat-icon>
-                            <input matInput [type]="hidePassword ? 'password' : 'text'">
-                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                                aria-label="Toggle password visibility">
-                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                        </mat-form-field>
-                        <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
-                        <div class="actions">
-                            <button mat-flat-button class="login-btn">เข้าสู่ระบบ</button>
-                        </div>
-                    </form>
-                </mat-card-content>
-            </mat-card>
-        </div>
-
-    </main>
+              <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
+              <div class="actions">
+                <button mat-flat-button class="login-btn">เข้าสู่ระบบ เพื่อเล่นเกมได้เลย</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </main>
 </div>
