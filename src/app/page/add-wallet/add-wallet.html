@@ -1,9 +1,7 @@
-<!-- <app-navber></app-navber> -->
+<app-navbar></app-navbar>
 <div class="wallet-container">
-
   <h1 class="page-title">เติมเงิน</h1>
   <div class="top-up-section">
-
     <mat-card class="history-card">
       <mat-card-header>
         <mat-card-title>ประวัติการเติมเงิน</mat-card-title>
@@ -42,7 +40,7 @@
     <mat-card-content>
       <div class="purchase-item" *ngFor="let item of purchaseHistory">
         <div class="game-info">
-          <img [src]="item.image" alt="{{ item.name }}">
+          <img [src]="item.image" alt="{{ item.name }}" />
           <span>{{ item.name }}</span>
         </div>
         <div class="purchase-details">
@@ -52,5 +50,4 @@
       </div>
     </mat-card-content>
   </mat-card>
-
 </div>

@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { Navbar } from "../../widget/navbar/navbar";
 // import { Navber } from "../../widget/navber/navber"; // สำหรับ Dropdown
 
 @Component({
@@ -22,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatSelectModule // เพิ่ม MatSelectModule
     ,
-    // Navber
+    Navbar
 ],
   templateUrl: './add-wallet.html',
   styleUrl: './add-wallet.scss'
