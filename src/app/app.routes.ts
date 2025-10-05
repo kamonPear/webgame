@@ -31,7 +31,6 @@ export const routes: Routes = [
   {
     path: 'register',
     component: Register,
-    canActivate: [loginGuard], // ป้องกันคนที่ล็อกอินแล้วเข้าซ้ำ
   },
 
   // --- Routes ที่ต้องล็อกอินก่อน (Protected Routes) ---
