@@ -1,5 +1,7 @@
 // --- ใช้ ::ng-deep เพื่อ override สไตล์ของ Angular Material ---
 @import url('https://fonts.googleapis.com/css2?family=New+Rocker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); // เพิ่ม font Inter
+
 :host {
     font-family: 'Inter', sans-serif;
 }
@@ -8,7 +10,6 @@
     height: 100vh;
     width: 100%;
     background-color: #ffffff;
-    /* สีพื้นหลังเทาเข้ม */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -47,16 +48,12 @@
     flex-grow: 1;
     display: grid;
     grid-template-columns: auto auto;
-    /* ให้การ์ดกว้างตามเนื้อหา */
     justify-content: center;
-    /* จัดทุกอย่างให้อยู่กลาง */
     align-items: center;
     gap: 0;
-    /* ปรับระยะห่างตรงกลาง (เช่น 2rem หรือ 1.5rem) */
     padding: 2rem 4rem;
     margin-top: 50px;
 }
-
 
 /* การ์ดข้อมูล (ฝั่งซ้าย) */
 .info-pane {
@@ -66,18 +63,14 @@
 
 .info-card {
     background-color: #b8b7b7 !important;
-    /* เทาเข้ม */
     color: black;
     text-align: left;
     padding: 0 2.5rem 3rem 2.5rem !important;
     border-radius: 20px 0 0 20px;
     height: 500px;
     position: relative;
-    /* ต้องมี position: relative/absolute/fixed/sticky ก่อน */
     z-index: 1;
-    /* ค่าน้อย อยู่ล่าง */
 }
-
 
 .info-card h3 {
     font-size: 1.5rem;
@@ -86,7 +79,6 @@
     color: black;
     line-height: 1.5;
 }
-
 
 /* การ์ดล็อกอิน (ฝั่งขวา) */
 .login-pane {
@@ -132,23 +124,42 @@
     position: relative;
     z-index: 10;
     margin-left: -19px;
-    
 }
 
-.profile-pic-btn {
+/* --- ใหม่: สำหรับรูปภาพโปรไฟล์และปุ่มอัปโหลด --- */
+.profile-pic-container {
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 50px !important;
-    height: 50px !important;
-    border: 2px solid #cceeff;
+    width: 80px; /* ขนาดของวงกลม */
+    height: 80px; /* ขนาดของวงกลม */
     border-radius: 50%;
+    overflow: hidden; /* ซ่อนส่วนเกินของรูป */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cceeff; /* สีพื้นหลังเมื่อยังไม่มีรูป */
+    cursor: pointer; /* แสดงว่ากดได้ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-    mat-icon {
-        color: #333;
-        font-size: 28px;
-        height: 28px;
-        width: 28px;
+.profile-pic-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ครอปรูปให้เต็มวงกลม */
+    border-radius: 50%; /* ให้รูปเป็นวงกลม */
+}
+
+.profile-pic-btn {
+    width: 100% !important; /* ให้ปุ่มเต็ม container */
+    height: 100% !important; /* ให้ปุ่มเต็ม container */
+    background: none !important; /* ลบพื้นหลังปุ่ม Mat-fab เดิม */
+    color: #333 !important; /* สีไอคอน */
+    
+    .mat-icon {
+        font-size: 40px !important; /* ขนาดไอคอนใหญ่ขึ้น */
+        width: 40px !important;
+        height: 40px !important;
     }
 }
 
@@ -172,11 +183,8 @@
 .actions {
     display: flex;
     justify-content: center;
-    /* จัดให้อยู่ตรงกลางแนวนอน */
     margin-top: 1rem;
-
 }
-
 
 .forgot-password {
     font-size: 0.9rem;
@@ -212,54 +220,68 @@
     position: absolute;
     left: 4%;
     top: 45%;
-    z-index: 11; // ให้อยู่บนสุด
-    width: 50px;
-    
+    z-index: 11;
+    // width: 50px; /* ลบออกเพื่อให้รูปแสดงผลตามขนาดจริง หรือกำหนดขนาดใหม่ */
+    transform: translateY(-50%); // จัดให้อยู่กลางตามแนวตั้ง
 }
 
+.character-image-container img {
+    max-width: 100%; // ปรับให้รูปไม่ล้น container
+    height: auto;
+    width: 400px; // กำหนดความกว้างที่เหมาะสม
+}
+
+/* --- Footer --- */
 .footer-text {
-    color: white;
+    color: #000000; /* เปลี่ยนสีเป็นดำเพื่อให้มองเห็น */
     text-align: center;
     width: 100%;
- 
-     font-size: 1.3rem;
-
-}
-/* --- เริ่มโค้ดสำหรับ Background ตกแต่ง --- */
-
-/* 1. ตั้งค่า Container หลักให้พร้อม */
-.login-page-container {
-  /* เพิ่ม 2 บรรทัดนี้เข้าไปใน class เดิมที่คุณมีอยู่ */
-  position: relative; /* เพื่อเป็นจุดอ้างอิงให้ ::before และ ::after */
-  overflow: hidden;   /* ป้องกันไม่ให้ส่วนตกแต่งล้นออกมานอกจอ */
+    font-size: 1.3rem;
+    margin-bottom: 2rem; // เพิ่มระยะห่างด้านล่าง
+    z-index: 2; // ให้อยู่เหนือพื้นหลัง แต่ไม่ทับการ์ด
+    position: relative;
 }
 
-/* 2. สร้างรูปทรงตกแต่ง (มุมซ้ายบน) ด้วย ::before */
+/* --- Background ตกแต่ง --- */
 .login-page-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 15vw;  /* ความกว้างของรูปทรง (ปรับได้) */
-  height: 45vh; /* ความสูงของรูปทรง (ปรับได้) */
-  background-color: #f1b179; /* สีส้ม (ปรับได้) */
-  z-index: 0;   /* จัดให้อยู่หลังสุด แต่เหนือพื้นหลังขาว */
-
-  /* หัวใจหลัก: ตัด Element เป็นรูปทรงหลายเหลี่ยม */
-  clip-path: polygon(0% 0%, 100% 25%, 50% 55%, 60% 100%, 0% 75%,);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15vw;
+    height: 45vh;
+    background-color: #f1b179;
+    z-index: 0;
+    clip-path: polygon(0% 0%, 100% 25%, 50% 55%, 60% 100%, 0% 75%);
 }
 
-/* 3. สร้างลายเส้นทแยงมุม (มุมขวาล่าง) ด้วย ::after */
 .login-page-container::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 30vw;  /* ความกว้างของลายเส้น (ปรับได้) */
-  height: 40vh; /* ความสูงของลายเส้น (ปรับได้) */
-  z-index: 0;   /* จัดให้อยู่หลังสุด แต่เหนือพื้นหลังขาว */
-  
-  /* หัวใจหลัก: สร้างลายเส้นด้วย Gradient */
-  
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30vw;
+    height: 40vh;
+    z-index: 0;
+    background: linear-gradient(135deg, #a6d96a 0%, #4a90e2 100%); /* ตัวอย่าง gradient */
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 0% 100%, 25% 50%, 0% 0%); /* ตัวอย่างรูปทรง */
 }
 
+/* --- Error Message Style --- */
+.error-message {
+    color: #f44336; /* สีแดง */
+    font-size: 0.85rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    padding-left: 14px; /* เยื้องให้ตรงกับ input field */
+}
+
+// Override Angular Material Form Field
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    padding-top: 0 !important; // ลดช่องว่างด้านบนของ error message
+}
+
+::ng-deep .mat-mdc-form-field-bottom-element-wrapper {
+    height: auto !important; // ทำให้ error message ไม่ถูกตัด
+}
