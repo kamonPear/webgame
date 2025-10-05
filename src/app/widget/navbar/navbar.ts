@@ -26,17 +26,27 @@ import { User } from '../../model/api.model';
   styleUrls: ['./navbar.scss'],
 })
 export class Navbar implements OnInit {
+  // --- ตัวแปรสำหรับควบคุมสถานะของ Sidebar และข้อมูลผู้ใช้ ---
   public isProfileOpen = false;
   public isUserLoggedIn = false;
   public currentUser: User | null = null;
-  public activeLink: string = 'แนะนำ';
+  public activeLink: string = 'แนะนำ'; // ลิงก์ที่ถูกเลือกเริ่มต้น
 
-  // --- รายการลิงก์สำหรับ Navbar (จะถูกกำหนดค่าแบบไดนามิก) ---
-  public navLinks: { name: string; path: string }[] = [];
+  // --- รายการลิงก์สำหรับ Navbar ---
+  public navLinks = [
+    { name: 'แนะนำ', path: '/main' },
+    { name: 'จับอันดับขายดี', path: '/bestsellers' },
+    { name: 'ประเภทเกม', path: '/categories' },
+    { name: 'เติมเงิน/ประวัติการซื้อ', path: '/history' },
+  ];
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID สำหรับเช็ค SSR
+  ) {}
 
   ngOnInit(): void {
+    // --- ตรวจสอบสถานะการล็อกอินเมื่อ Component โหลด (เฉพาะฝั่งเบราว์เซอร์) ---
     if (isPlatformBrowser(this.platformId)) {
       this.checkLoginStatus();
     }
@@ -44,15 +54,16 @@ export class Navbar implements OnInit {
 
   checkLoginStatus(): void {
     const token = localStorage.getItem('authToken');
-    const userDataString = localStorage.getItem('userData');
+    const userDataString = localStorage.getItem('userData'); // ใช้ key 'userData' ตามที่คุณระบุ
 
-    this.isUserLoggedIn = !!token && !!userDataString; // ตรวจสอบให้แน่ใจว่าเป็น boolean
-
-    if (this.isUserLoggedIn && userDataString) {
+    if (token && userDataString) {
+      this.isUserLoggedIn = true;
       this.currentUser = JSON.parse(userDataString);
     } else {
+      this.isUserLoggedIn = false;
       this.currentUser = null;
     }
+<<<<<<< HEAD
 
     // *** 🎉 การเปลี่ยนแปลงที่ 1: อัปเดตลิงก์ทุกครั้งที่ตรวจสอบสถานะ ***
     this.updateNavLinks();
@@ -76,29 +87,34 @@ export class Navbar implements OnInit {
         { name: 'เกม', path: '/gametype' },
       ];
     }
+=======
+>>>>>>> 2e9aad4a56480ea631cad1bf74dfc17d77222db0
   }
 
+  // --- ฟังก์ชันสำหรับเปิด/ปิด Sidebar ---
   toggleProfileSidebar(): void {
     this.isProfileOpen = !this.isProfileOpen;
   }
 
+  // --- ฟังก์ชันสำหรับตั้งค่าลิงก์ที่ Active ---
   setActiveLink(linkName: string): void {
     this.activeLink = linkName;
   }
 
+  // --- ฟังก์ชันสำหรับออกจากระบบ ---
   logout(): void {
+    // ตรวจสอบว่าเป็นเบราว์เซอร์ก่อนลบ localStorage
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('authToken');
-      localStorage.removeItem('userData');
+      localStorage.removeItem('userData'); // ใช้ key 'userData' ตามที่คุณระบุ
     }
 
+    // อัปเดตสถานะและปิด Sidebar
     this.isUserLoggedIn = false;
     this.currentUser = null;
     this.isProfileOpen = false;
 
-    // *** 🎉 การเปลี่ยนแปลงที่ 3: อัปเดตลิงก์หลังจากออกจากระบบ ***
-    this.updateNavLinks();
-
+    // นำทางกลับไปที่หน้าล็อกอิน
     this.router.navigate(['/login']);
   }
 }
