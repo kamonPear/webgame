@@ -1,21 +1,87 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+// --- Import Angular Material Modules ที่จำเป็น ---
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+// --- Import Model User ---
+import { User } from '../../model/api.model';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true, // ระบุว่าเป็น Standalone Component
-  imports: [CommonModule], // เพิ่ม CommonModule สำหรับใช้งาน [ngClass] หรือ [class]
+  selector: 'app-navbar', // --- ตั้งชื่อ selector ---
+  standalone: true,
+  imports: [
+    RouterModule,
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.scss'
+  styleUrls: ['./navbar.scss'],
 })
-export class Navbar {
+export class Navbar implements OnInit {
+  // --- ตัวแปรสำหรับควบคุมสถานะของ Sidebar และข้อมูลผู้ใช้ ---
+  public isProfileOpen = false;
+  public isUserLoggedIn = false;
+  public currentUser: User | null = null;
+  public activeLink: string = 'แนะนำ'; // ลิงก์ที่ถูกเลือกเริ่มต้น
 
-  // Property สำหรับเก็บสถานะการเปิด/ปิดเมนู (เริ่มต้นคือปิด)
-  isMenuOpen: boolean = false;
+  // --- รายการลิงก์สำหรับ Navbar ---
+  public navLinks = [
+    { name: 'แนะนำ', path: '/main' },
+    { name: 'จับอันดับขายดี', path: '/bestsellers' },
+    { name: 'ประเภทเกม', path: '/categories' },
+    { name: 'เติมเงิน/ประวัติการซื้อ', path: '/history' },
+  ];
 
-  // Method ที่จะถูกเรียกเมื่อมีการคลิกที่ปุ่ม Hamburger
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen; // สลับค่า true/false
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    // --- ตรวจสอบสถานะการล็อกอินเมื่อ Component โหลด ---
+    this.checkLoginStatus();
   }
 
+  checkLoginStatus(): void {
+    const token = localStorage.getItem('authToken');
+    const userDataString = localStorage.getItem('userData');
+
+    if (token && userDataString) {
+      this.isUserLoggedIn = true;
+      this.currentUser = JSON.parse(userDataString);
+    } else {
+      this.isUserLoggedIn = false;
+      this.currentUser = null;
+    }
+  }
+
+  // --- ฟังก์ชันสำหรับเปิด/ปิด Sidebar ---
+  toggleProfileSidebar(): void {
+    this.isProfileOpen = !this.isProfileOpen;
+  }
+
+  // --- ฟังก์ชันสำหรับตั้งค่าลิงก์ที่ Active ---
+  setActiveLink(linkName: string): void {
+    this.activeLink = linkName;
+  }
+
+  // --- ฟังก์ชันสำหรับออกจากระบบ ---
+  logout(): void {
+    // ล้างข้อมูลทั้งหมดจาก localStorage
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+
+    // อัปเดตสถานะและปิด Sidebar
+    this.isUserLoggedIn = false;
+    this.currentUser = null;
+    this.isProfileOpen = false;
+
+    // นำทางกลับไปที่หน้าล็อกอิน
+    this.router.navigate(['/login']);
+  }
 }
