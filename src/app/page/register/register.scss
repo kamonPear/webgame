@@ -1,4 +1,5 @@
 // --- ใช้ ::ng-deep เพื่อ override สไตล์ของ Angular Material ---
+@import url('https://fonts.googleapis.com/css2?family=New+Rocker&display=swap');
 :host {
     font-family: 'Inter', sans-serif;
 }
@@ -6,7 +7,7 @@
 .login-page-container {
     height: 100vh;
     width: 100%;
-    background-color: #383838;
+    background-color: #ffffff;
     /* สีพื้นหลังเทาเข้ม */
     display: flex;
     flex-direction: column;
@@ -16,7 +17,7 @@
 
 /* --- Header --- */
 .page-header {
-    color: #9FCC70;
+    color: #000000;
     padding: 2rem 4rem;
     display: flex;
     align-items: center;
@@ -34,7 +35,7 @@
 .page-header .page-title {
     font-family: 'New Rocker', cursive;
     font-size: 3.5rem;
-    color: #9FCC70;
+    color: #000000;
     position: absolute;
     left: 45%;
     transform: translateX(-50%);
@@ -208,8 +209,8 @@
 /* --- สำหรับรูปภาพตัวละคร --- */
 .character-image-container {
     position: absolute;
-    left: 10%;
-    top: 35%;
+    left: 13%;
+    top: 45%;
     z-index: 11; // ให้อยู่บนสุด
     width: 100px;
     // เพิ่มโค้ด img ใน html แล้ว uncomment ส่วนนี้
@@ -224,3 +225,41 @@
      font-size: 1.3rem;
 
 }
+/* --- เริ่มโค้ดสำหรับ Background ตกแต่ง --- */
+
+/* 1. ตั้งค่า Container หลักให้พร้อม */
+.login-page-container {
+  /* เพิ่ม 2 บรรทัดนี้เข้าไปใน class เดิมที่คุณมีอยู่ */
+  position: relative; /* เพื่อเป็นจุดอ้างอิงให้ ::before และ ::after */
+  overflow: hidden;   /* ป้องกันไม่ให้ส่วนตกแต่งล้นออกมานอกจอ */
+}
+
+/* 2. สร้างรูปทรงตกแต่ง (มุมซ้ายบน) ด้วย ::before */
+.login-page-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15vw;  /* ความกว้างของรูปทรง (ปรับได้) */
+  height: 45vh; /* ความสูงของรูปทรง (ปรับได้) */
+  background-color: #f1b179; /* สีส้ม (ปรับได้) */
+  z-index: 0;   /* จัดให้อยู่หลังสุด แต่เหนือพื้นหลังขาว */
+
+  /* หัวใจหลัก: ตัด Element เป็นรูปทรงหลายเหลี่ยม */
+  clip-path: polygon(0% 0%, 100% 25%, 50% 55%, 60% 100%, 0% 75%,);
+}
+
+/* 3. สร้างลายเส้นทแยงมุม (มุมขวาล่าง) ด้วย ::after */
+.login-page-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30vw;  /* ความกว้างของลายเส้น (ปรับได้) */
+  height: 40vh; /* ความสูงของลายเส้น (ปรับได้) */
+  z-index: 0;   /* จัดให้อยู่หลังสุด แต่เหนือพื้นหลังขาว */
+  
+  /* หัวใจหลัก: สร้างลายเส้นด้วย Gradient */
+  
+}
+
