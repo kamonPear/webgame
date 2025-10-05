@@ -5,7 +5,7 @@ import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
 
 // Import Components ของคุณ...
-import { Register } from './page/register/register';
+
 import { Login } from './page/login/login';
 import { Main } from './page/main/main';
 import { Mainadmin } from './admin/mainadmin/mainadmin';
@@ -14,6 +14,8 @@ import { Historyuser } from './admin/history/history';
 import { Discounts } from './admin/discounts/discounts';
 import { AddWallet } from './page/add-wallet/add-wallet';
 import { Home } from './page/home/home';
+import { Register } from './page/register/register';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   // --- Routes ที่ไม่ต้องล็อกอิน (Public Routes) ---
@@ -48,22 +50,22 @@ export const routes: Routes = [
   {
     path: 'mainadmin',
     component: Mainadmin,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   {
     path: 'addgame',
     component: Addgame,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   {
     path: 'history',
     component: Historyuser,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   {
     path: 'discounts',
     component: Discounts,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
 
   // --- Route เริ่มต้นและ Wildcard ---

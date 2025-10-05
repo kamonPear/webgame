@@ -18,14 +18,14 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './register.html',
-  styleUrl: './register.scss'
+  styleUrl: './register.scss',
 })
 export class Register {
   // สร้างตัวแปรสำหรับซ่อน/แสดงรหัสผ่าน
   public hidePassword = true;
 
-  constructor() { }
+  constructor() {}
 }
