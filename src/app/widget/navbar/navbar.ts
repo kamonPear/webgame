@@ -63,7 +63,6 @@ export class Navbar implements OnInit {
       this.isUserLoggedIn = false;
       this.currentUser = null;
     }
-<<<<<<< HEAD
 
     // *** 🎉 การเปลี่ยนแปลงที่ 1: อัปเดตลิงก์ทุกครั้งที่ตรวจสอบสถานะ ***
     this.updateNavLinks();
@@ -87,8 +86,6 @@ export class Navbar implements OnInit {
         { name: 'เกม', path: '/gametype' },
       ];
     }
-=======
->>>>>>> 2e9aad4a56480ea631cad1bf74dfc17d77222db0
   }
 
   // --- ฟังก์ชันสำหรับเปิด/ปิด Sidebar ---
