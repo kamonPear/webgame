@@ -27,10 +27,13 @@
         <mat-card class="login-card">
           <mat-card-content>
             <h2 class="login-title">ลงชื่อเข้าใช้</h2>
-            <form>
+
+            <!-- ===== 1. เชื่อมต่อฟอร์ม ===== -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <mat-form-field appearance="fill" class="login-field">
                 <mat-icon matPrefix>person</mat-icon>
-                <input matInput placeholder="ชื่อผู้ใช้" />
+                <!-- ===== 2. เพิ่ม formControlName ===== -->
+                <input matInput placeholder="ชื่อผู้ใช้" formControlName="username" />
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="login-field">
@@ -39,15 +42,34 @@
                   matInput
                   [type]="hidePassword ? 'password' : 'text'"
                   placeholder="รหัสผ่าน"
+                  formControlName="password"
                 />
-                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <button
+                  type="button"
+                  mat-icon-button
+                  matSuffix
+                  (click)="hidePassword = !hidePassword"
+                >
                   <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
               </mat-form-field>
 
+              <!-- ===== 4. ส่วนแสดงข้อความ Error ===== -->
+              <div *ngIf="loginError" class="login-error-message">
+                {{ loginError }}
+              </div>
+
               <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
               <div class="actions">
-                <button mat-flat-button class="login-btn">เข้าสู่ระบบ เพื่อเล่นเกมได้เลย</button>
+                <!-- ===== 5. เปลี่ยนปุ่มเป็น type="submit" ===== -->
+                <button
+                  mat-flat-button
+                  class="login-btn"
+                  type="submit"
+                  [disabled]="loginForm.invalid"
+                >
+                  เข้าสู่ระบบ เพื่อเล่นเกมได้เลย
+                </button>
               </div>
             </form>
           </mat-card-content>
