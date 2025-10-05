@@ -1,0 +1,29 @@
+<app-navadmin></app-navadmin>
+<div class="page-container">
+  <div class="content-wrapper">
+    <header class="admin-header">
+      <h1>ประวัติ</h1>
+      <p>การทำธุระกรรม</p>
+    </header>
+    <!-- ส่วนหัวข้อของรายการ -->
+    <div class="list-header">
+      <h2>ผู้ใช้ทั้งหมด</h2>
+    </div>
+
+    <!-- รายการผู้ใช้ -->
+    <div class="user-list">
+      <div *ngFor="let user of users" class="user-item">
+        <!-- รูปโปรไฟล์ (วงกลม) -->
+        <img [src]="user.imageUrl" alt="User Avatar" class="user-avatar" />
+
+        <!-- ชื่อผู้ใช้ -->
+        <span class="user-name">{{ user.name }}</span>
+
+        <!-- ปุ่มดูประวัติ -->
+        <div class="action-button-container">
+          <button class="btn details-button">ดูประวัติธุรกรรม</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

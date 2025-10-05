@@ -1,0 +1,68 @@
+<div class="login-page-container">
+
+  <header class="page-header">
+    <span class="logo-top">Game Oracle</span>
+    <span class="page-title">Sign Up</span>
+  </header>
+
+  <main class="main-content">
+
+    <div class="character-image-container">
+      <img src="assets/images/image_register.png" alt="Register Character Image">
+    </div>
+
+    <div class="info-pane">
+      <mat-card class="info-card">
+        <h3>ขั้นตอนง่ายๆ ในการเข้าร่วม สมาชิก GameOracle</h3>
+
+        <ol class="steps-list">
+          <li>ลงทะเบียนโดยชื่อผู้ใช้, อีเมล, รหัสผ่าน</li>
+          <li>เลือกรูปโปรไฟล์</li>
+          <li>กรอกแบบฟอร์มสมัครสมาชิกให้เรียบร้อย</li>
+          <li>กรุณาคลิกปุ่มสร้างบัญชี</li>
+        </ol>
+         <button mat-flat-button class="create-account-btn" routerLink="/login">เข้าสู่ระบบ</button>
+        </mat-card>
+    </div>
+
+    <div class="login-pane">
+      <mat-card class="login-card">
+        <mat-card-content>
+
+          <button mat-icon-button class="profile-pic-btn" aria-label="Upload profile picture">
+            <mat-icon>photo_camera</mat-icon>
+          </button>
+
+          <h2 class="login-title">สมัครสมาชิก</h2>
+          <form>
+            <mat-form-field appearance="fill" class="login-field">
+              <mat-icon matPrefix>person</mat-icon>
+              <input matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="login-field">
+              <mat-icon matPrefix>mail</mat-icon>
+              <input matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="login-field">
+              <mat-icon matPrefix>lock</mat-icon>
+              <input matInput [type]="hidePassword ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                aria-label="Toggle password visibility">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <div class="actions">
+              <button mat-flat-button class="login-btn">สร้างบัญชี</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </main>
+
+  <h3 class="footer-text">คุณพร้อมแล้ว เริ่มสนุกกับการช็อปปิ้งใน GameOracle ตอนนี้</h3>
+</div>
