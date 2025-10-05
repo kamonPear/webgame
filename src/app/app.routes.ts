@@ -1,4 +1,10 @@
 import { Routes } from '@angular/router';
+
+// 1. นำเข้า Guards ที่สร้างขึ้น (ตรวจสอบ path ให้ถูกต้อง)
+import { authGuard } from './guards/auth.guard';
+import { loginGuard } from './guards/login.guard';
+
+// Import Components ของคุณ...
 import { Register } from './page/register/register';
 import { Login } from './page/login/login';
 import { Main } from './page/main/main';
@@ -10,16 +16,64 @@ import { AddWallet } from './page/add-wallet/add-wallet';
 import { Home } from './page/home/home';
 
 export const routes: Routes = [
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: 'addwallet', component: AddWallet },
+  // --- Routes ที่ไม่ต้องล็อกอิน (Public Routes) ---
+  {
+    path: 'main',
+    component: Main, // หน้านี้เป็นหน้าสาธารณะ ไม่ต้องมี Guard
+  },
+  {
+    path: 'login',
+    component: Login,
+    canActivate: [loginGuard], // ป้องกันคนที่ล็อกอินแล้วเข้าซ้ำ
+  },
+  {
+    path: 'register',
+    component: Register,
+    canActivate: [loginGuard], // ป้องกันคนที่ล็อกอินแล้วเข้าซ้ำ
+  },
 
-  // (แนะนำ) กำหนดหน้าเริ่มต้น เมื่อไม่มี path
-  { path: 'main', component: Main },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'Mainadmin', component: Mainadmin },
-  { path: 'addgame', component: Addgame },
-  { path: 'history', component: Historyuser },
-  { path: 'discounts', component: Discounts },
-  { path: 'home', component: Home },
+  // --- Routes ที่ต้องล็อกอินก่อน (Protected Routes) ---
+  {
+    path: 'home',
+    component: Home,
+    canActivate: [authGuard], // ต้องล็อกอินก่อนถึงจะเข้าได้
+  },
+  {
+    path: 'addwallet',
+    component: AddWallet,
+    canActivate: [authGuard],
+  },
+
+  // --- Routes สำหรับ Admin ที่ต้องล็อกอินก่อน ---
+  {
+    path: 'mainadmin',
+    component: Mainadmin,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'addgame',
+    component: Addgame,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'history',
+    component: Historyuser,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'discounts',
+    component: Discounts,
+    canActivate: [authGuard],
+  },
+
+  // --- Route เริ่มต้นและ Wildcard ---
+  {
+    path: '',
+    redirectTo: '/main', // เปลี่ยนให้หน้าเริ่มต้นชี้ไปที่ /main
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '/main', // หากเข้า path ที่ไม่มีอยู่จริง ให้กลับไปหน้า main
+  },
 ];

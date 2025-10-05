@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 // --- Import Angular Material Modules ที่จำเป็น ---
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { User } from '../../model/api.model';
 
 @Component({
-  selector: 'app-navadmin', // --- ตั้งชื่อ selector ---
+  selector: 'app-navadmin', // --- เปลี่ยน selector ---
   standalone: true,
   imports: [
     RouterModule,
@@ -22,17 +22,18 @@ import { User } from '../../model/api.model';
     MatFormFieldModule,
     MatInputModule,
   ],
-  templateUrl: './navadmin.html',
-  styleUrls: ['./navadmin.scss'],
+  templateUrl: './navadmin.html', // --- เปลี่ยน templateUrl ---
+  styleUrls: ['./navadmin.scss'], // --- เปลี่ยน styleUrls ---
 })
 export class Navadmin implements OnInit {
+  // --- เปลี่ยนชื่อคลาส ---
   // --- ตัวแปรสำหรับควบคุมสถานะของ Sidebar และข้อมูลผู้ใช้ ---
   public isProfileOpen = false;
   public isUserLoggedIn = false;
   public currentUser: User | null = null;
-  public activeLink: string = 'แนะนำ'; // ลิงก์ที่ถูกเลือกเริ่มต้น
+  public activeLink: string = 'หน้าหลัก'; // --- เปลี่ยนลิงก์เริ่มต้น ---
 
-  // --- รายการลิงก์สำหรับ Navbar ---
+  // --- รายการลิงก์สำหรับ Navbar (Admin) ---
   public navLinks = [
     { name: 'หน้าหลัก', path: '/mainadmin' },
     { name: 'เพิ่มรายการใหม่', path: '/addgame' },
@@ -40,11 +41,16 @@ export class Navadmin implements OnInit {
     { name: 'เติมเงิน/ประวัติการทำธุระกรรม', path: '/history' },
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID สำหรับเช็ค SSR
+  ) {}
 
   ngOnInit(): void {
-    // --- ตรวจสอบสถานะการล็อกอินเมื่อ Component โหลด ---
-    this.checkLoginStatus();
+    // --- ตรวจสอบสถานะการล็อกอินเมื่อ Component โหลด (เฉพาะฝั่งเบราว์เซอร์) ---
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkLoginStatus();
+    }
   }
 
   checkLoginStatus(): void {
@@ -72,9 +78,11 @@ export class Navadmin implements OnInit {
 
   // --- ฟังก์ชันสำหรับออกจากระบบ ---
   logout(): void {
-    // ล้างข้อมูลทั้งหมดจาก localStorage
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
+    // ตรวจสอบว่าเป็นเบราว์เซอร์ก่อนลบ localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userData');
+    }
 
     // อัปเดตสถานะและปิด Sidebar
     this.isUserLoggedIn = false;

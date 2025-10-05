@@ -61,7 +61,7 @@ export class Login {
         // 2. เช็ค Role จากข้อมูล User ที่ได้รับกลับมา
         if (response.user.role === 'admin') {
           // ถ้าเป็น 'admin' ให้ไปที่หน้า Mainadmin
-          this.router.navigate(['/Mainadmin']);
+          this.router.navigate(['/mainadmin']);
         } else {
           // ถ้าเป็น Role อื่นๆ (เช่น 'member') ให้ไปที่หน้า main
           this.router.navigate(['/main']);

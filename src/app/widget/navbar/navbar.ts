@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 // --- Import Angular Material Modules ที่จำเป็น ---
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { User } from '../../model/api.model';
 
 @Component({
-  selector: 'app-navbar', // --- ตั้งชื่อ selector ---
+  selector: 'app-navbar',
   standalone: true,
   imports: [
     RouterModule,
@@ -40,16 +40,21 @@ export class Navbar implements OnInit {
     { name: 'เติมเงิน/ประวัติการซื้อ', path: '/history' },
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID สำหรับเช็ค SSR
+  ) {}
 
   ngOnInit(): void {
-    // --- ตรวจสอบสถานะการล็อกอินเมื่อ Component โหลด ---
-    this.checkLoginStatus();
+    // --- ตรวจสอบสถานะการล็อกอินเมื่อ Component โหลด (เฉพาะฝั่งเบราว์เซอร์) ---
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkLoginStatus();
+    }
   }
 
   checkLoginStatus(): void {
     const token = localStorage.getItem('authToken');
-    const userDataString = localStorage.getItem('userData');
+    const userDataString = localStorage.getItem('userData'); // ใช้ key 'userData' ตามที่คุณระบุ
 
     if (token && userDataString) {
       this.isUserLoggedIn = true;
@@ -72,9 +77,11 @@ export class Navbar implements OnInit {
 
   // --- ฟังก์ชันสำหรับออกจากระบบ ---
   logout(): void {
-    // ล้างข้อมูลทั้งหมดจาก localStorage
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
+    // ตรวจสอบว่าเป็นเบราว์เซอร์ก่อนลบ localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userData'); // ใช้ key 'userData' ตามที่คุณระบุ
+    }
 
     // อัปเดตสถานะและปิด Sidebar
     this.isUserLoggedIn = false;
