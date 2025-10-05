@@ -16,12 +16,24 @@ import { AddWallet } from './page/add-wallet/add-wallet';
 import { Home } from './page/home/home';
 import { Register } from './page/register/register';
 import { adminGuard } from './guards/admin.guard';
+import { Splitgame } from './page/splitgame/splitgame';
+import { Gametype } from './page/gametype/gametype';
 
 export const routes: Routes = [
   // --- Routes ที่ไม่ต้องล็อกอิน (Public Routes) ---
   {
     path: 'main',
     component: Main, // หน้านี้เป็นหน้าสาธารณะ ไม่ต้องมี Guard
+  },
+  {
+    path: 'gametype',
+    component: Gametype,
+    canActivate: [authGuard], // หน้านี้เป็นหน้าสาธารณะ ไม่ต้องมี Guard
+  },
+  {
+    path: 'splitgame',
+    component: Splitgame,
+    canActivate: [authGuard], // หน้านี้เป็นหน้าสาธารณะ ไม่ต้องมี Guard
   },
   {
     path: 'login',

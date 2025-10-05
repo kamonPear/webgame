@@ -65,7 +65,7 @@ export class Navbar implements OnInit {
       this.navLinks = [
         { name: 'แนะนำ', path: '/main' },
         { name: 'จับอันดับขายดี', path: '/bestsellers' },
-        { name: 'ประเภทเกม', path: '/categories' },
+        { name: 'เกม', path: '/gametype' },
         { name: 'เติมเงิน/ประวัติการซื้อ', path: '/addwallet' },
       ];
     } else {
@@ -73,7 +73,7 @@ export class Navbar implements OnInit {
       this.navLinks = [
         { name: 'แนะนำ', path: '/main' },
         { name: 'จับอันดับขายดี', path: '/bestsellers' },
-        { name: 'ประเภทเกม', path: '/categories' },
+        { name: 'เกม', path: '/gametype' },
       ];
     }
   }
