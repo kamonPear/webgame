@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 
 // --- Import Model User ---
 import { User } from '../../model/api.model';
+import { Constants } from '../../config/constants';
 
 @Component({
   selector: 'app-navbar',
@@ -30,7 +31,8 @@ export class Navbar implements OnInit {
   public isProfileOpen = false;
   public isUserLoggedIn = false;
   public currentUser: User | null = null;
-  public activeLink: string = 'แนะนำ'; // ลิงก์ที่ถูกเลือกเริ่มต้น
+  public activeLink: string = 'แนะนำ'; // ลิงก์ที่ถูกเลือกเริ่มต้น userImageUrl: string | null = null;
+  userImageUrl: string | null = null;
 
   // --- รายการลิงก์สำหรับ Navbar ---
   public navLinks = [
@@ -42,6 +44,7 @@ export class Navbar implements OnInit {
 
   constructor(
     private router: Router,
+    private constants: Constants,
     @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID สำหรับเช็ค SSR
   ) {}
 
@@ -62,6 +65,11 @@ export class Navbar implements OnInit {
     } else {
       this.isUserLoggedIn = false;
       this.currentUser = null;
+    }
+    // 4. สร้าง URL ที่สมบูรณ์
+    if (this.currentUser && this.currentUser.ImageProfile) {
+      // นำ Base URL ของ API มาต่อกับ Path ของรูปภาพ
+      this.userImageUrl = `${this.constants.API_ENDPOINT}/${this.currentUser.ImageProfile}`;
     }
 
     // *** 🎉 การเปลี่ยนแปลงที่ 1: อัปเดตลิงก์ทุกครั้งที่ตรวจสอบสถานะ ***

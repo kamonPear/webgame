@@ -62,7 +62,7 @@
 <aside class="profile-sidebar" [class.open]="isProfileOpen">
   <div *ngIf="currentUser" class="profile-details">
     <div class="avatar-container">
-      <img [src]="currentUser.ImageProfile" alt="User Avatar" />
+      <img [src]="userImageUrl || 'assets/images/default-avatar.png'" alt="User Avatar" />
     </div>
     <h2>ข้อมูลส่วนตัว</h2>
     <div class="info-field">
@@ -89,7 +89,7 @@
   </div>
 
   <div class="sidebar-footer">
-    <button mat-flat-button class="footer-btn primary-btn">
+    <button mat-flat-button class="footer-btn primary-btn" routerLink="/editprofile">
       <mat-icon>person</mat-icon>
       <span>แก้ไขโปรไฟล์</span>
     </button>

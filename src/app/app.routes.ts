@@ -18,6 +18,7 @@ import { Register } from './page/register/register';
 import { adminGuard } from './guards/admin.guard';
 import { Splitgame } from './page/splitgame/splitgame';
 import { Gametype } from './page/gametype/gametype';
+import { EditProfile } from './page/edit-proflie/edit-proflie';
 
 export const routes: Routes = [
   // --- Routes ที่ไม่ต้องล็อกอิน (Public Routes) ---
@@ -54,6 +55,11 @@ export const routes: Routes = [
   {
     path: 'addwallet',
     component: AddWallet,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'editprofile',
+    component: EditProfile,
     canActivate: [authGuard],
   },
 

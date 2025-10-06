@@ -4,7 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Constants } from '../config/constants';
-import { LoginResponse, RegisterResponse, UserLogin, UserRegister } from '../model/api.model';
+import {
+  LoginResponse,
+  ProfileResponse,
+  RegisterResponse,
+  UserLogin,
+  UserRegister,
+} from '../model/api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +51,28 @@ export class AuthService {
   login(credentials: UserLogin): Observable<LoginResponse> {
     const url = `${this.API_ENDPOINT}/login`;
     return this.http.post<LoginResponse>(url, credentials);
+  }
+
+  // --- 👇 ฟังก์ชันใหม่ที่เพิ่มเข้ามา ---
+
+  /**
+   * ดึงข้อมูลโปรไฟล์ของผู้ใช้ที่ล็อกอินอยู่
+   * @returns Observable ของ ProfileResponse
+   */
+  getProfile(): Observable<ProfileResponse> {
+    const url = `${this.API_ENDPOINT}/api/profile`;
+    // เราจะใช้ Interceptor ในการแนบ Token ไปกับ Header โดยอัตโนมัติ
+    return this.http.get<ProfileResponse>(url);
+  }
+
+  /**
+   * อัปเดตข้อมูลโปรไฟล์
+   * @param formData ข้อมูลที่ต้องการอัปเดต (อาจมีแค่บาง field)
+   * @returns Observable ของ ProfileResponse
+   */
+  updateProfile(formData: FormData): Observable<ProfileResponse> {
+    const url = `${this.API_ENDPOINT}/api/updateprofile`;
+    // เราจะใช้ Interceptor ในการแนบ Token ไปกับ Header โดยอัตโนมัติ
+    return this.http.put<ProfileResponse>(url, formData);
   }
 }

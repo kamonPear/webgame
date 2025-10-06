@@ -1,0 +1,90 @@
+<div class="edit-profile-page">
+  <mat-card class="profile-card">
+    <div class="card-header">
+      <mat-card-title>แก้ไขข้อมูลส่วนตัว</mat-card-title>
+      <button mat-icon-button routerLink="/main" aria-label="Back to main page">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <mat-card-content>
+      <div class="content-wrapper">
+        <div class="profile-pic-section">
+          <div
+            class="profile-pic-container"
+            (click)="fileInput.click()"
+            matTooltip="คลิกเพื่อเปลี่ยนรูปโปรไฟล์"
+          >
+            <img
+              [src]="
+                imagePreview || originalUser?.ImageProfile || 'assets/images/default-avatar.png'
+              "
+              alt="Profile Preview"
+            />
+            <div class="overlay">
+              <mat-icon>photo_camera</mat-icon>
+              <span>เปลี่ยนรูป</span>
+            </div>
+          </div>
+          <input
+            hidden
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept="image/png, image/jpeg"
+          />
+          <p class="pic-hint">อัปโหลดรูปภาพ .jpg หรือ .png</p>
+        </div>
+
+        <div class="form-section">
+          <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+              <mat-label>ชื่อผู้ใช้</mat-label>
+              <mat-icon matPrefix>person_outline</mat-icon>
+              <input matInput formControlName="username" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>อีเมล</mat-label>
+              <mat-icon matPrefix>mail_outline</mat-icon>
+              <input matInput formControlName="email" type="email" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>รหัสผ่านใหม่ (ถ้าต้องการเปลี่ยน)</mat-label>
+              <mat-icon matPrefix>lock_outline</mat-icon>
+              <input
+                matInput
+                formControlName="password"
+                type="password"
+                placeholder="กรอกรหัสผ่านใหม่อย่างน้อย 6 ตัว"
+              />
+            </mat-form-field>
+
+            <div *ngIf="successMessage" class="message success">
+              <mat-icon>check_circle</mat-icon>
+              <span>{{ successMessage }}</span>
+            </div>
+            <div *ngIf="errorMessage" class="message error">
+              <mat-icon>error</mat-icon>
+              <span>{{ errorMessage }}</span>
+            </div>
+
+            <div class="actions">
+              <button mat-stroked-button type="button" routerLink="/main">ยกเลิก</button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="(editProfileForm.pristine && !selectedFile) || isLoading"
+              >
+                <span *ngIf="!isLoading">บันทึกการเปลี่ยนแปลง</span>
+                <span *ngIf="isLoading">กำลังบันทึก...</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

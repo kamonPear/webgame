@@ -8,8 +8,10 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
-// 1. Import 'provideHttpClient' และเพิ่ม 'withFetch' เข้ามา
-import { provideHttpClient, withFetch } from '@angular/common/http';
+// --- Imports ที่จำเป็นสำหรับ Interceptor ---
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
+// -----------------------------------------
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +20,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
 
-    // 2. เพิ่ม withFetch() เข้าไปใน provideHttpClient()
-    provideHttpClient(withFetch()),
+    // --- การตั้งค่าสำหรับ HttpClient และ Interceptor ---
+    // 1. ทำให้ HttpClient รู้จักการทำงานกับ Interceptor แบบ Class-based
+    provideHttpClient(withInterceptorsFromDi()),
+
+    // 2. ลงทะเบียน AuthInterceptor ของเรา
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    // ----------------------------------------------
   ],
 };

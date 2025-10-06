@@ -21,7 +21,6 @@ export interface UserLogin {
   password: string; // Backend รับเป็น 'password'
 }
 
-
 // --- Interfaces สำหรับ Response Body ---
 
 /**
@@ -58,11 +57,9 @@ export interface LoginResponse {
 /**
  * Interface สำหรับข้อมูลโปรไฟล์ที่ได้รับกลับมาจาก endpoint /profile
  */
+
 export interface ProfileResponse {
-    status: string;
-    message: string;
-    user: {
-        username: string;
-        email: string;
-    }
+  status: string;
+  message: string;
+  user: User; // Backend ส่งข้อมูล user ทั้งหมดกลับมา
 }
